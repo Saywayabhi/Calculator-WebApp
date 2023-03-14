@@ -1,89 +1,29 @@
-let runningTotal = 0;
-let buffer ="0";
-let previouseOperator;
-
-const screen = document.querySelector('.screen');
-
-function buttonClick(value){
-    if(isNaN(value)){
-        handleSymbol(value);
-    }else{
-        handleNumber(value);
+console.log("hi")
+let buttons=document.querySelectorAll('.button');
+let string=""
+// console.log(buttons)
+Array.from(buttons).forEach((button)=>{
+    // console.log(button)
+    button.addEventListener('click',(e)=>{
+    console.log(e.target.innerHTML);
+    if(e.target.innerHTML=="="){
+        string=eval(string);
     }
-    screen.innerText = buffer;
-}
-
-function handleSymbol(symbol){
-    switch(symnbol){
-        case 'C':
-        buffer = '0';
-        runningTotal = 0;
-        break;
-        case '=':
-            if(previouseOperator === null){
-                return 
-            }
-            flushOperation(parseInt(buffer));
-            previousOperator = null;
-            buffer = runningTotal;
-            runningTotal = 0;
-            break;
-        case '←':
-            if(buffer.length ===1){
-                buffer = '0';
-            }else{
-                buffer = buffer.substring(0, buffer.length - 1);
-            }
-            break;
-            case '+':
-            case '-':
-            case '×':           
-            case '÷':
-                handleMath(symbol);
-                break;
+    else if(e.target.innerHTML=="AC"){
+        string="";
     }
-}
-
-function handleMath(symbol){
-     if(buffer === '0'){
-        return;
-     }
-     const intBuffer = parseInt(buffer);
-
-     if(runningTotal === 0){
-        runningTotal = intBuffer;
-     }else{
-        flushOperation(intBuffer);
-     }
-     previouseOperator = symbol;
-     buffer = '0';
-}
-
-function flushOperation(intBuffer){
-    if(previouseOperator === '+'){
-        runningTotal += intBuffer;
-    }else if(previouseOperator === '-'){
-        runningTotal-= intBuffer;
-    }else if(previouseOperator === '×'){
-            runningTotal *= intBuffer;
-    }else if(previouseOperator === '÷'){
-            runningTotal /= intBuffer;
-        }
+    else if(e.target.innerHTML=="DEL"){
+        string=string.slice(0,string.length-1);
     }
-
-
-function handleNumber(numberString){
-    if(buffer === '0'){
-        buffer = numberString;
-    }else {
-        buffer += numberString;
+    else if(e.target.innerHTML=="%"){
+string=eval(string)/100;
     }
-}
-
-function init(){
-    documdent.querySelector('.calc-button').
-    addEventListener('click', function(event){
-        buttonClick(event.target.innerText);
+    else{
+    string+=e.target.innerHTML;
+    }
+    document.querySelector('.input_field').value=string;
     })
-}
-init();
+
+
+
+} )
